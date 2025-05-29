@@ -1,0 +1,13 @@
+    #rootpane {
+        -fx-background-color:"black";
+    }
+
+    #myCircle {
+        -fx-background-color:yellow;
+    }
+
+.button:hover {
+    -fx-background-color: yellow;
+}
+
+

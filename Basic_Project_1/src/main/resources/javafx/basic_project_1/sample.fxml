@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.basic_project_1.HelloController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="250.0" layoutX="110.0" layoutY="75.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Button layoutX="274.0" layoutY="24.0" mnemonicParsing="false" onAction="#up" text="UP" textAlignment="CENTER" textFill="#f40f0f" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="46.0" layoutY="188.0" mnemonicParsing="false" onAction="#left" text="LEFT">
+         <textFill>
+            <RadialGradient centerX="0.5542035398230087" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.05400000140070915" green="0.8999999761581421" blue="0.8600620031356812" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="536.0" layoutY="188.0" mnemonicParsing="false" onAction="#right" prefHeight="26.0" prefWidth="52.0" text="RIGHT" textFill="#df1313">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="274.0" layoutY="329.0" mnemonicParsing="false" onAction="#down" text="DOWN" textFill="#3c0bde">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Circle fx:id="myCircle" layoutX="321.0" layoutY="202.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button layoutX="43.0" layoutY="39.0" mnemonicParsing="false" onAction="#TopLeft" text="Top.L" />
+      <Button layoutX="536.0" layoutY="39.0" mnemonicParsing="false" onAction="#TopRight" prefHeight="26.0" prefWidth="52.0" text="Top.R" />
+      <Button layoutX="43.0" layoutY="331.0" mnemonicParsing="false" onAction="#BotLeft" text="Bot.L" />
+      <Button layoutX="537.0" layoutY="331.0" mnemonicParsing="false" onAction="#BotRight" prefHeight="26.0" prefWidth="52.0" text="Bot.R" />
+   </children>
+   <cursor>
+      <Cursor fx:constant="CLOSED_HAND" />
+   </cursor>
+   <effect>
+      <Glow />
+   </effect>
+</AnchorPane>
