@@ -31,9 +31,15 @@ public class Main extends Application {
 //        stage.setScene(scene);
 //        stage.show();
 
+//        Parent root = FXMLLoader.load(getClass().getResource("ScrollPane_Project.fxml"));
+
         Parent root = FXMLLoader.load(getClass().getResource("Paneproject-1.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("BorderPaneLayout.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("GridPane.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("StackPaneLayout.fxml"));
         stage.setTitle("JavaFX Drag & Drop Demo");
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 1920, 1080));
+        stage.setFullScreen(true);
         stage.show();
 
 

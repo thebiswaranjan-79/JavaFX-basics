@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<?import java.net.URL?>
-<AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.hbox_vbox.PaneProjects_1">
-    <children>
-        <!-- Draggable Shapes -->
-        <Rectangle fx:id="redRect" x="50" y="50" width="100" height="100" fill="red" />
-
-        <!-- Bonus: Additional shapes -->
-        <Rectangle fx:id="greenRect" x="200" y="150" width="80" height="80" fill="green" />
-        <Rectangle fx:id="blueRect" x="300" y="70" width="120" height="60" fill="blue" />
-
-        <!-- Coordinate Display -->
-<!--        <Label fx:id="coordLabel" layoutX="10" layoutY="10" text="Position: (50, 50)" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>-->
-    </children>
+<StackPane fx:id="mainPane" maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: LightGrey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.hbox_vbox.PaneProjects_1">
     <stylesheets>
         <URL value="@style/styles.css" />
     </stylesheets>
-</AnchorPane>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <children>
+      <Pane fx:id="boxPane" maxHeight="540.0" maxWidth="960.0" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: lightblue;">
+         <children>
+            <Rectangle fx:id="redRect" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="50.0" layoutX="480.0" layoutY="270.0" stroke="#f20303" strokeType="INSIDE" width="50.0" />
+         </children>
+      </Pane>
+   </children>
+</StackPane>
