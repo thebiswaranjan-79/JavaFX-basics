@@ -1,8 +1,11 @@
 package javafx.testproject_1;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class ImageInfo {
 
-    private String imageName;
+    private  String imageName;
     private String imagePath;
     private double width;
     private double height;
@@ -10,16 +13,20 @@ public class ImageInfo {
     private int bitDepth;
     private int channel;
 
-    // Constructor
-    public ImageInfo( String imageName, String imagePath, double width, double height, String format, int bitDepth, int channels) {
 
-        this.imageName = imageName;
+    private final StringProperty remarks = new SimpleStringProperty(this, "remarks", "");
+
+    // Constructor
+    public ImageInfo( String imgName, String imagePath, double width, double height, String format, int bitDepth, int channels) {
+
+        this.imageName = imgName;
         this.imagePath = imagePath;
         this.width = width;
         this.height = height;
         this.format = format;
         this.bitDepth = bitDepth;
         this.channel = channels;
+
     }
 
     public String getImageName() {
@@ -29,6 +36,22 @@ public class ImageInfo {
     public String getImagePath() {
         return imagePath;
     }
+
+
+
+    // remarks getter and setter for StringProperty
+    public String getRemarks() {
+        return remarks.get();
+    }
+
+    public void setRemarks(String value) {
+        remarks.set(value);
+    }
+
+    public StringProperty remarksProperty() {
+        return remarks;
+    }
+
 
     public double getWidth() {
         return width;
@@ -49,4 +72,19 @@ public class ImageInfo {
     public int getChannel() {
         return channel;
     }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+
+
 }
