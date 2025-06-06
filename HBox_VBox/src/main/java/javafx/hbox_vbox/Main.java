@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 import java.io.IOException;
@@ -39,8 +40,7 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(getClass().getResource("StackPaneLayout.fxml"));
         stage.setTitle("JavaFX Drag & Drop Demo");
         stage.setScene(new Scene(root, 1920, 1080));
-        stage.setFullScreen(true);
-        stage.show();
+        stage.show(); // Will use DECORATED by default
 
 
 

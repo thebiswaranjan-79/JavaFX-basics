@@ -16,9 +16,11 @@ import javafx.util.converter.DoubleStringConverter;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Project_1 {
 
@@ -35,12 +37,22 @@ public class Project_1 {
     @FXML
     private TextField remarks;
 
+    private final ImageInfoDAO infoDao = new ImageInfoDAO();
+
 
     private final Set<String> imagePathSet = new HashSet<>();
     private final ObservableList<ImageInfo> imageList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+
+        try {
+            infoDao.createTableIfNotExists();
+            loadImagesFromDatabase(); // Load existing data from DB
+        } catch (SQLException e) {
+            showAlert("Database Error", "Error initializing database: " + e.getMessage());
+        }
+
         colImageName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getImageName()));
         colImagePath.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getImagePath()));
         colFormat.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormat()));
@@ -86,21 +98,50 @@ public class Project_1 {
         colImageName.setOnEditCommit(event -> {
             ImageInfo imageInfo = event.getRowValue();
             imageInfo.setImageName(event.getNewValue());
+            updateImageInDatabase(imageInfo);
         });
+
          colWidth.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colWidth.setOnEditCommit(event -> {
             ImageInfo imageInfo = event.getRowValue();
             imageInfo.setWidth(event.getNewValue());
+            updateImageInDatabase(imageInfo);
         });
 
         colHeight.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colHeight.setOnEditCommit(event -> {
             ImageInfo imageInfo = event.getRowValue();
             imageInfo.setHeight(event.getNewValue());
+            updateImageInDatabase(imageInfo);
         });
 
         tableView.setItems(imageList);
     }
+
+    private void updateImageInDatabase(ImageInfo imageInfo) {
+        try {
+            infoDao.updateImage(imageInfo);
+        } catch (SQLException e) {
+            showAlert("Update Error", "Failed to update image: " + e.getMessage());
+        }
+    }
+
+    private void loadImagesFromDatabase() {
+        try {
+            List<ImageInfo> images = infoDao.getAllImages();
+            imageList.setAll(images);
+
+            // Populate path set for duplicate checking
+            imagePathSet.addAll(
+                    images.stream()
+                            .map(ImageInfo::getImagePath)
+                            .collect(Collectors.toList())
+            );
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to load images: " + e.getMessage());
+        }
+    }
+
 
     @FXML
     public void handleAddButtonClick(ActionEvent event) {
@@ -109,7 +150,7 @@ public class Project_1 {
 
         if (selectedRow != null && remarkText != null && !remarkText.trim().isEmpty()) {
             selectedRow.setRemarks(remarkText);
-            // no need to refresh tableView here
+            updateImageInDatabase(selectedRow); // Update DB with new remark
             remarks.clear();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -121,11 +162,7 @@ public class Project_1 {
 
         System.out.println(selectedRow.getRemarks());
 
-
-
     }
-
-
 
     @FXML
     private void handleOpenButtonClick() {
@@ -138,64 +175,76 @@ public class Project_1 {
         List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
         if (files == null) return;
 
-
         for (File file : files) {
-
             try {
-                Image fxImage = new Image(file.toURI().toString());
-
                 String absolutePath = file.getAbsolutePath();
 
+                // Check if image already exists in database
                 if (imagePathSet.contains(absolutePath)) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Duplicate Image");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Image \"" + file.getName() + "\" already exists!");
-                    alert.showAndWait();
+                    showDuplicateAlert(file.getName());
                     continue;
                 }
 
-                // Using AWT to read BufferedImage for bitDepth and channel info
+                // Process image metadata
+                Image fxImage = new Image(file.toURI().toString());
                 BufferedImage bufferedImage = ImageIO.read(file);
+
                 int bitDepth = bufferedImage.getColorModel().getPixelSize();
                 int channels = bufferedImage.getColorModel().getNumComponents();
-
-                // Print info
-                System.out.println("Image: " + file.getName());
-                System.out.println(" - Bit Depth: " + bitDepth);
-                System.out.println(" - Channels: " + channels);
-
-
                 String imageName = file.getName();
-                String imagePath = file.getAbsolutePath();
+                String imagePath = absolutePath;
                 double width = fxImage.getWidth();
                 double height = fxImage.getHeight();
                 String format = getFileExtension(file);
 
+                // Create ImageInfo object
+                ImageInfo info = new ImageInfo(imageName, imagePath, width, height,
+                        format, bitDepth, channels);
 
-                System.out.println("Image Name is " + imageName);
-                System.out.println("Image Path  is " + imagePath);
-                System.out.println("Width => " + width);
-                System.out.println("Height => " + height);
-                System.out.println("Format => " + format);
+                // Save to database
+                saveImageToDatabase(info);
 
-
-                ImageInfo info = new ImageInfo( imageName, imagePath,
-                        width, height, format,
-                        bitDepth, channels
-                );
-
+                // Add to UI if successfully saved
                 imageList.add(info);
-                imagePathSet.add(absolutePath);  // Track path in set to avoid duplicates
-
+                imagePathSet.add(absolutePath);
 
             } catch (Exception e) {
                 e.printStackTrace();
+                showAlert("Error Processing Image", "Failed to process: " + file.getName());
             }
         }
     }
 
+    private void saveImageToDatabase(ImageInfo info) {
+        try {
+            infoDao.insertImage(info);
+        } catch (SQLException e) {
+            // Handle database errors specifically
+            if (e.getMessage().contains("UNIQUE constraint")) {
+                showDuplicateAlert(info.getImageName());
+            } else {
+                showAlert("Database Error", "Failed to save image: " + e.getMessage());
+            }
+            // Re-throw to prevent adding to UI
+            throw new RuntimeException("Database save failed", e);
+        }
+    }
 
+    private void showDuplicateAlert(String fileName) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Duplicate Image");
+        alert.setHeaderText(null);
+        alert.setContentText("Image \"" + fileName + "\" already exists!");
+        alert.showAndWait();
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     private String getFileExtension(File file) {
         String name = file.getName();

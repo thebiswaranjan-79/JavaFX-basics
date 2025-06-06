@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>javaFX</groupId>
-    <artifactId>TestProject_1</artifactId>
+    <artifactId>SQL_JavaFX_Connection</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>TestProject_1</name>
+    <name>SQL_JavaFX_Connection</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,17 +39,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-javafx</artifactId>
-            <version>12.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-materialdesign2-pack</artifactId>
-            <version>12.3.0</version>
-        </dependency>
-
         <!-- Use a newer version in pom.xml -->
         <dependency>
             <groupId>org.xerial</groupId>
@@ -71,9 +60,8 @@
             <version>1.7.36</version>
         </dependency>
 
+
     </dependencies>
-
-
 
     <build>
         <plugins>
@@ -95,7 +83,8 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>javafx.testproject_1/javafx.testproject_1.Main</mainClass>
+                            <mainClass>javafx.sql_javafx_connection/javafx.sql_javafx_connection.Main
+                            </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

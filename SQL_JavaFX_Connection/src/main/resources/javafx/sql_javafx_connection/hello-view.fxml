@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/20"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="javafx.sql_javafx_connection.StudentController">
+
+    <Label text="Add / Update Student"/>
+    <TextField fx:id="idField" promptText="ID (Only for Update/Delete)"/>
+    <TextField fx:id="nameField" promptText="Name"/>
+    <TextField fx:id="ageField" promptText="Age"/>
+
+    <HBox spacing="10">
+        <Button text="Add Student" onAction="#handleAdd"/>
+        <Button text="View Students" onAction="#handleView"/>
+        <Button text="Update Student" onAction="#handleUpdate"/>
+        <Button text="Delete Student" onAction="#handleDelete"/>
+    </HBox>
+
+    <TextArea fx:id="outputArea" prefRowCount="10"/>
+</VBox>
