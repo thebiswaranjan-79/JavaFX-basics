@@ -37,6 +37,8 @@ public class Project_1 {
     @FXML
     private TextField remarks;
 
+
+    // Object of the DAO Class
     private final ImageInfoDAO infoDao = new ImageInfoDAO();
 
 
@@ -49,6 +51,7 @@ public class Project_1 {
         try {
             infoDao.createTableIfNotExists();
             loadImagesFromDatabase(); // Load existing data from DB
+
         } catch (SQLException e) {
             showAlert("Database Error", "Error initializing database: " + e.getMessage());
         }

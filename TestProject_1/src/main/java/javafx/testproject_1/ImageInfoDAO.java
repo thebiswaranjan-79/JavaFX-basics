@@ -50,6 +50,7 @@ public class ImageInfoDAO {
                         rs.getInt("bitDepth"),
                         rs.getInt("channel")
                 );
+
                 info.setRemarks(rs.getString("remarks"));
                 images.add(info);
             }
