@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="javafx.resizable_pane.HelloController"
+            prefWidth="800" prefHeight="600"
+            style="-fx-background-color: #cccccc;">
+
+        <StackPane fx:id="imageContainer"
+                   AnchorPane.topAnchor="0"
+                   AnchorPane.bottomAnchor="0"
+                   AnchorPane.leftAnchor="0"
+                   AnchorPane.rightAnchor="0"
+                   style="-fx-background-color: white;">
+                <Group fx:id="group">
+                        <GridPane fx:id="gridPane"
+                                  style="-fx-background-color: red;" />
+                </Group>
+        </StackPane>
+</AnchorPane>
+
+
