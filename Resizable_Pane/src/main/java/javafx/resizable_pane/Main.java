@@ -1,26 +1,31 @@
 package javafx.resizable_pane;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        ResponsiveSquarePane squarePane = new ResponsiveSquarePane();
+    public void start(Stage stage) {
+        GridPane content = new GridPane();
+        content.setStyle("-fx-background-color: tomato;");
+        content.setHgap(10);
+        content.setVgap(10);
+
+        // Just set pref size
+        content.setPrefSize(300, 600);
+
+        // Responsive pane (no aspect ratio passed!)
+        ViewBox squarePane = new ViewBox();
         squarePane.setStyle("-fx-background-color: lightgray;");
+        squarePane.getChildren().add(content);
 
-        GridPane grid = new GridPane();
-        grid.setStyle("-fx-background-color: red;");
-        grid.setPrefSize(500, 500); // Large logical size
+        StackPane root = new StackPane(squarePane);
 
-        squarePane.getChildren().add(grid);
-        Scene scene = new Scene(squarePane , 600, 600);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Auto-Aspect Ratio Responsive Pane");
         stage.setScene(scene);
         stage.show();
     }
