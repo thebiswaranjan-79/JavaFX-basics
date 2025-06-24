@@ -1,4 +1,4 @@
-package javafx.resizable_pane;
+package javafx.testproject_1.utils;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -98,7 +98,7 @@ public class ViewBox extends Pane {
         if (parentAspectRatio == childAspectRatio) {
             finalW = parent.getWidth();
             finalH = parent.getHeight();
-           // System.out.println("same");
+            // System.out.println("same");
         } else if (childAspectRatio < parentAspectRatio) {
             finalH = parent.getHeight();
             finalW = childAspectRatio * parent.getHeight();
@@ -116,7 +116,7 @@ public class ViewBox extends Pane {
         scaley = finalH/child.getPrefHeight();
 
 
-      System.out.println(scalex + " x " + scaley);
+        System.out.println(scalex + " x " + scaley);
 
         setScaleX(scalex);
         setScaleY(scaley);

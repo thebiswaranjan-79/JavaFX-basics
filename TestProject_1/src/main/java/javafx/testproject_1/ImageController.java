@@ -61,6 +61,7 @@ public class ImageController {
             try {
                 imageService.createTableIfNotExists();
                 loadImagesFromDatabase(); // Load existing data from DB
+                imageView.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
             } catch (SQLException e) {
                 showAlert("Database Error", "Error initializing database: " + e.getMessage());

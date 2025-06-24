@@ -49,10 +49,7 @@ public class ImageViewController {
         this.imageView = imageView;
     }
 
-    public void zoomIn() {
-        imageView.setScaleX(imageView.getScaleX() + 0.1);
-        imageView.setScaleY(imageView.getScaleY() + 0.1);
-    }
+
 
     public void resetImage(){
         imageView.setScaleX(1.0);

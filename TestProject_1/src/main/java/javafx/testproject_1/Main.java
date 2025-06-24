@@ -28,12 +28,10 @@ public class Main extends Application {
         mainStage.setMaximized(true);
         mainStage.setFullScreen(true);
 //        mainStage.setFullScreenExitHint("");
-        mainStage.setTitle("Test Project");
+        mainStage.setTitle("X-Ray Project");
         mainStage.setScene(scene);
         mainStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         mainStage.show();
-
-
     }
 
     public static void main(String[] args) {
